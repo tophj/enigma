@@ -15,23 +15,28 @@ class Rotor:
 
 
 
-	# Initializes a rotor with a default turnoverKey and startingChar
+	# Initializes a rotor with a default turnoverKey and startingKey
 	def __init__(self):
 
 		self.turnoverKey = "R"
-		self.startingChar = "A"
+		self.startingKey = "A"
 
 		self.nextRotor = None
 	
 
 	# Wrapper for changing the starting character
-	def changeStartingChar(self, char):
+	def changeStartingKey(self, char):
 
 		if char.isalpha():
-			self.startingChar = char.upper()
+			self.startingKey = char.upper()
 
 		else:
 			print "Character entered is invalid, can't change starting character"
+
+
+	def getStartingKey(self):
+
+		return self.startingKey
 
 	def changeTurnoverKey(self, key):
 
@@ -40,6 +45,12 @@ class Rotor:
 
 		else:
 			print "Character entered is invalid, can't change turnover key"
+
+
+	def getTurnoverKey(self):
+
+		return self.turnoverKey
+
 
 	def setNextRotor(self, rotor):
 
@@ -50,10 +61,46 @@ class Rotor:
 			print "Invalid rotor."
 
 
-
+	# The rotors should already be incremented properly. Only takes a letter and figures out what it should be using
+	# a substitution cipher based off the starting key
 	def encrypt(self, char):
 
+		# It's the last rotor; send it to the reflector
+		if self.nextRotor is None:
+			print "Increment reflector"
 
+		else:
+			# determines key offset, which is starting key ascii value - ascii value of "A"
+			keyOffset = ord(self.startingKey) - 65
+
+			asciiChar = ord(char)
+			newAsciiChar = asciiChar + keyOffset % 90
+
+			if newAsciiChar < 65:
+				newAsciiChar += 64
+
+			encryptedChar = chr(newAsciiChar)
+			
+			return encryptedChar
+
+
+		
+
+	# Uppercase ASCII values are 65 - 90 (A-Z)
+	def increment(self):
+
+
+
+		asciiNewStartingChar = ord(self.startingKey) + 1
+
+		if asciiNewStartingChar > 90:
+			asciiNewStartingChar = 65
+
+		self.changeStartingKey(chr(asciiNewStartingChar))
+
+		if self.startingKey == self.turnoverKey:
+			if self.nextRotor is not None:
+				self.nextRotor.increment()
 
 
 
