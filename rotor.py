@@ -22,6 +22,7 @@ class Rotor:
 		self.startingKey = "A"
 
 		self.nextRotor = None
+		self.previousRotor = None
 	
 
 	# Wrapper for changing the starting character
@@ -61,35 +62,62 @@ class Rotor:
 			print "Invalid rotor."
 
 
+	def setPreviousRotor(self, rotor):
+
+		if isinstance(rotor,Rotor):
+			self.previousRotor = rotor
+
+		else:
+			print "Invalid rotor."
+
+
+
+
 	# The rotors should already be incremented properly. Only takes a letter and figures out what it should be using
 	# a substitution cipher based off the starting key
 	def encrypt(self, char):
 
 		# It's the last rotor; send it to the reflector
-		if self.nextRotor is None:
-			print "Increment reflector"
+		# if self.nextRotor is None:
+		# 	#We know we are looking at the reflector
+
+		# else:
+		# determines key offset, which is starting key ascii value - ascii value of "A"
+		keyOffset = ord(self.getStartingKey()) - 65
+
+		asciiChar = ord(char)
+		newAsciiChar = asciiChar + keyOffset % 90
+
+		if newAsciiChar < 65:
+			newAsciiChar += 64
+
+		encryptedChar = chr(newAsciiChar)
+		
+		return encryptedChar
+
+
+	# Post encrypt is used to encrypt a character after sending it through all three rotors
+	# and back through the reflector	
+	def postEncrypt(self,char):
+
+		keyOffset = abs(ord(self.getStartingKey()) - ord(char))
+		asciiValue = keyOffset + 65
+
+		postEncryptChar = chr(asciiValue)
+
+
+
+		# This means it is the first rotor, so send it to the lightbulbs aka print it
+		if self.previousRotor is None:
+			print "Final encrypted character is : ", postEncryptChar
 
 		else:
-			# determines key offset, which is starting key ascii value - ascii value of "A"
-			keyOffset = ord(self.startingKey) - 65
 
-			asciiChar = ord(char)
-			newAsciiChar = asciiChar + keyOffset % 90
+			return postEncryptChar
 
-			if newAsciiChar < 65:
-				newAsciiChar += 64
-
-			encryptedChar = chr(newAsciiChar)
-			
-			return encryptedChar
-
-
-		
 
 	# Uppercase ASCII values are 65 - 90 (A-Z)
 	def increment(self):
-
-
 
 		asciiNewStartingChar = ord(self.startingKey) + 1
 
