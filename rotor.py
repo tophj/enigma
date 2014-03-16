@@ -85,11 +85,13 @@ class Rotor:
 		# determines key offset, which is starting key ascii value - ascii value of "A"
 		keyOffset = ord(self.getStartingKey()) - 65
 
-		asciiChar = ord(char)
-		newAsciiChar = asciiChar + keyOffset % 90
+		asciiChar = ord(char.upper())
+		newAsciiChar = (asciiChar + keyOffset)
 
-		if newAsciiChar < 65:
-			newAsciiChar += 64
+		if newAsciiChar > 90: 
+			newOffset = newAsciiChar - 90
+			newAsciiChar = 64 + newOffset
+
 
 		encryptedChar = chr(newAsciiChar)
 		
@@ -109,8 +111,8 @@ class Rotor:
 
 		# This means it is the first rotor, so send it to the lightbulbs aka print it
 		if self.previousRotor is None:
-			print "Final encrypted character is : ", postEncryptChar
-
+			#print "Final encrypted character is : ", postEncryptChar
+			return postEncryptChar
 		else:
 
 			return postEncryptChar
