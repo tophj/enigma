@@ -24,7 +24,19 @@
 
 from rotor import Rotor
 from reflector import Reflector
+import sys
 
+print ""
+print "---------------- Welcome to Enigma ----------------"
+print "To encrypt a word, type 'encrypt' and then the word"
+print "To exit, type 'exit'"
+print "---------------------------------------------------"
+print ""
+
+
+
+
+# Set up 
 firstRotor = Rotor()
 secondRotor = Rotor()
 thirdRotor = Rotor()
@@ -35,4 +47,86 @@ secondRotor.setNextRotor(thirdRotor)
 
 thirdRotor.setPreviousRotor(secondRotor)
 secondRotor.setPreviousRotor(firstRotor)
+
+firstRotor.changeTurnoverKey("R")
+secondRotor.changeTurnoverKey("F")
+thirdRotor.changeTurnoverKey("W")
+
+
+
+
+
+# Start reading 
+
+line = sys.stdin.readline()
+
+
+while(line != "exit\n"):
+
+
+	wordToEncrypt = None
+
+
+
+
+	words = line.split()
+	for word in words:
+
+		if word == "encrypt":
+	
+			wordToEncrypt = words[1]
+
+	if wordToEncrypt is not None and wordToEncrypt.isalpha():
+
+		encryptedLength = len(wordToEncrypt)
+		encryptedWord = ""
+
+
+		for i in range(0,encryptedLength):
+
+			char = wordToEncrypt[i]
+
+			firstRotor.increment()
+			firstOutput = firstRotor.encrypt(char)
+
+
+			secondOutput = secondRotor.encrypt(firstOutput)
+			thirdOutput = thirdRotor.encrypt(secondOutput)
+
+			outputReflector = theReflector.getMapping(thirdOutput)
+
+
+			thirdOutput = thirdRotor.postEncrypt(outputReflector)
+			secondOutput = secondRotor.postEncrypt(thirdOutput)
+			firstOutput = firstRotor.postEncrypt(secondOutput)
+
+			encryptedWord += firstOutput
+
+
+		print ""
+		print wordToEncrypt, " encrypted as: ", encryptedWord
+		print ""
+
+		firstRotor.reset()
+		secondRotor.reset()
+		thirdRotor.reset()
+
+
+	line = sys.stdin.readline()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

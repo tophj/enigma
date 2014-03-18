@@ -1,13 +1,13 @@
 
-
-
-
-
+import sys
+import os.path
+sys.path.append(
+    os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
 
 
 from rotor import Rotor
 from reflector import Reflector
-import sys
+
 
 firstRotor = Rotor()
 secondRotor = Rotor()

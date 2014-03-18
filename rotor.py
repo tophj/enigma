@@ -20,6 +20,8 @@ class Rotor:
 
 		self.turnoverKey = "R"
 		self.startingKey = "A"
+		self.staticStartingKey = "A"
+
 
 		self.nextRotor = None
 		self.previousRotor = None
@@ -30,6 +32,7 @@ class Rotor:
 
 		if char.isalpha():
 			self.startingKey = char.upper()
+			self.staticStartingKey = char.upper()
 
 		else:
 			print "Character entered is invalid, can't change starting character"
@@ -38,6 +41,10 @@ class Rotor:
 	def getStartingKey(self):
 
 		return self.startingKey
+
+	def getStaticStartingKey(self):
+
+		return self.staticStartingKey
 
 	def changeTurnoverKey(self, key):
 
@@ -126,11 +133,19 @@ class Rotor:
 		if asciiNewStartingChar > 90:
 			asciiNewStartingChar = 65
 
-		self.changeStartingKey(chr(asciiNewStartingChar))
+		self.startingKey = chr(asciiNewStartingChar)
 
 		if self.startingKey == self.turnoverKey:
 			if self.nextRotor is not None:
 				self.nextRotor.increment()
+
+
+
+
+	# Resets the rotor to it's initial settings defined by changeTurnoverKey and changeStartingKey or the defaults
+	def reset(self):
+
+		self.changeStartingKey(self.getStaticStartingKey())
 
 
 
