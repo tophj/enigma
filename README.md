@@ -1,7 +1,7 @@
 # Enigma
 
 ## Features:
-\* Simulates the functionality of the historical M3, 3-rotor Enigma
+\* Simulates the functionality of the historical Wehrmacht, 3-rotor Enigma
 
 \* Customizable plugboard, reflector and rotor configurations
 
@@ -14,13 +14,28 @@ This will initialize the default plugboard, reflector and rotors
 
 
 ex.
-To encrypt "ABC" use 'encrypt ABC'
+To encrypt "ABC" type "ABC".
  
+
+## Default Settings:
+
+Using Day 16 configuration from the German Heer(Army) schedule found here:
+
+http://users.telenet.be/d.rijmenants/pics/hires-wehrmachtkey-stab.jpg
+
+
+
+Rotors(Walzenlage) : I II III
+
+
+Starting Keys(Rungstellung): 07, 11, 15 = GKO
+
+
+Plugboard Configuration(Steckerverbindungen): WZ AB MO TF RX SG QU VI YN EL
+
+
 
 
 ## TODO:
-Support multiple words
 
 Add UI settings for changing rotors
-
-Add class Enigma
