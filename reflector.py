@@ -46,7 +46,7 @@ class Reflector:
 	def getMapping(self, char):
 
 		try:
-			return self.mappingDict[char]
+			return self.mappingDict[char.upper()]
 
 		except KeyError:
 

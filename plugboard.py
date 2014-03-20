@@ -37,13 +37,16 @@ class Plugboard:
 
 	def changeString(self, string):
 
+		returnString = ""
 		for i in range(0,len(string)):
 
 			char = string[i]
+			
 
 			if char in self.mapping.keys():
-				char = self.mapping[char]
+				returnString += self.mapping[char]
+			else:
+				returnString += char.upper()
 
 
-
-		return string
+		return returnString
