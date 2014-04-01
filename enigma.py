@@ -81,6 +81,12 @@ class Enigma:
 
 
 			wordToEncrypt = line.rstrip()
+			originalWord = wordToEncrypt
+			
+			wordToEncrypt = wordToEncrypt.replace(" ","")
+			
+			
+
 			wordToEncrypt = self.thePlugboard.changeString(wordToEncrypt)
 
 
@@ -113,7 +119,7 @@ class Enigma:
 
 
 				print ""
-				print wordToEncrypt, " encrypted as: ", encryptedWord
+				print originalWord, " encrypted as: ", encryptedWord
 				print ""
 
 				self.firstRotor.reset()
