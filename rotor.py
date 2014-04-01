@@ -27,7 +27,7 @@ class Rotor:
 		self.previousRotor = None
 	
 
-	# Wrapper for changing the starting character
+	# Wrapper for changing the starting key
 	def changeStartingKey(self, char):
 
 		if char.isalpha():
@@ -41,6 +41,10 @@ class Rotor:
 	def getStartingKey(self):
 
 		return self.startingKey
+
+
+	# Static starting key differs from starting key because it doesn't change through
+	# incrementation of the rotor
 
 	def getStaticStartingKey(self):
 
@@ -78,7 +82,21 @@ class Rotor:
 			print "Invalid rotor."
 
 
+	def getNextRotor(self):
 
+		if self.nextRotor is not None:
+			return self.nextRotor
+
+		else:
+			print "Next Rotor is None."
+
+	def getPreviousRotor(self):
+
+		if self.previousRotor is not None:
+			return self.previousRotor
+			
+		else:
+			print "Previous Rotor is None."
 
 	# The rotors should already be incremented properly. Only takes a letter and figures out what it should be using
 	# a substitution cipher based off the starting key

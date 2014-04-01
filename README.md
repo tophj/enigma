@@ -38,4 +38,5 @@ Plugboard Configuration(Steckerverbindungen): WZ AB MO TF RX SG QU VI YN EL
 
 ## TODO:
 Add unittest for rotor and enigma
+
 Add UI settings for changing rotors
