@@ -38,8 +38,6 @@ print ""
 
 
 
-
-
 class Enigma:
 
 	def __init__(self):
@@ -57,12 +55,9 @@ class Enigma:
 		self.thirdRotor.setPreviousRotor(self.secondRotor)
 		self.secondRotor.setPreviousRotor(self.firstRotor)
 
-
-
 		self.firstRotor.changeTurnoverKey("R")
 		self.secondRotor.changeTurnoverKey("F")
 		self.thirdRotor.changeTurnoverKey("W")
-
 
 		self.firstRotor.changeStartingKey("G")
 		self.secondRotor.changeStartingKey("K")
@@ -81,21 +76,14 @@ class Enigma:
 
 
 			wordToEncrypt = line.rstrip()
-			originalWord = wordToEncrypt
-			
+			originalWord = wordToEncrypt		
 			wordToEncrypt = wordToEncrypt.replace(" ","")
-			
-			
-
 			wordToEncrypt = self.thePlugboard.changeString(wordToEncrypt)
-
-
 
 			if wordToEncrypt is not None and wordToEncrypt.isalpha():
 
 				encryptedLength = len(wordToEncrypt)
 				encryptedWord = ""
-
 
 				for i in range(0,encryptedLength):
 
@@ -103,20 +91,16 @@ class Enigma:
 
 					self.firstRotor.increment()
 					firstOutput = self.firstRotor.encrypt(char)
-
-
 					secondOutput = self.secondRotor.encrypt(firstOutput)
 					thirdOutput = self.thirdRotor.encrypt(secondOutput)
 
 					outputReflector = self.theReflector.getMapping(thirdOutput)
-
 
 					thirdOutput = self.thirdRotor.postEncrypt(outputReflector)
 					secondOutput = self.secondRotor.postEncrypt(thirdOutput)
 					firstOutput = self.firstRotor.postEncrypt(secondOutput)
 
 					encryptedWord += firstOutput
-
 
 				print ""
 				print originalWord, " encrypted as: ", encryptedWord
@@ -126,11 +110,7 @@ class Enigma:
 				self.secondRotor.reset()
 				self.thirdRotor.reset()
 
-
 			line = sys.stdin.readline()
-
-
-
 
 runEnigma = Enigma()
 runEnigma.readInput()

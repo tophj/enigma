@@ -16,7 +16,6 @@ class testRotor(unittest.TestCase):
 		self.thirdRotor = Rotor()
 
 
-
 	def testChangeStartingKey(self):
 
 		testKey1 = "G"
@@ -43,7 +42,6 @@ class testRotor(unittest.TestCase):
 		testKey2 = "H"
 		testKey3 = "f"
 
-
 		self.firstRotor.changeTurnoverKey(testKey1)
 		self.assertEqual("B",self.firstRotor.getTurnoverKey())
 
@@ -60,8 +58,8 @@ class testRotor(unittest.TestCase):
 
 		self.firstRotor.changeStartingKey(testKey1)
 		self.firstRotor.changeTurnoverKey("B")
-
 		self.firstRotor.increment()
+		
 		self.assertEqual("Q",self.firstRotor.getStartingKey())
 
 		self.firstRotor.increment()
