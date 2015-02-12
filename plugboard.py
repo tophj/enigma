@@ -11,42 +11,27 @@ class Plugboard:
 	# WZ AB MO TF RX SG QU VI YN EL
 	def __init__(self):
 
-		self.mapping = {'W' : 'Z',
-		'A':'B',
-		'M':'O',
-		'T':'F',
-		'R':'X',
-		'S':'G',
-		'Q':'U',
-		'V':'I',
-		'Y':'N',
-		'E':'L',
+		self.mapping = {
+		'W':'Z', 'Z':'W',
+		'A':'B', 'B':'A',
+		'M':'O', 'O':'M',
+		'T':'F', 'F':'T',
+		'R':'X', 'X':'R',
+		'S':'G', 'G':'S',
+		'Q':'U', 'U':'Q',
+		'V':'I', 'I':'V',
+		'Y':'N', 'N':'Y',
+		'E':'L', 'L':'E'}
 
-		'Z':'W',
-		'B':'A',
-		'O':'M',
-		'F':'T',
-		'X':'R',
-		'G':'S',
-		'U':'Q',
-		'I':'V',
-		'N':'Y',
-		'L':'E'}
-		
-
-
+	# returns the input strings mapping
 	def changeString(self, string):
 
 		returnString = ""
 		for i in range(0,len(string)):
-
 			char = string[i]
-			
-
 			if char in self.mapping.keys():
 				returnString += self.mapping[char]
 			else:
 				returnString += char.upper()
-
 
 		return returnString

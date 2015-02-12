@@ -1,18 +1,8 @@
-# Enigma Program!
-#
+# -----------------------------------------------------------------------------------
 #  _______________________________ 
 # < Enigma - by Christopher Jones >
 #  ------------------------------- 
-#         \   ^__^
-#          \  (oo)\_______
-#             (__)\       )\/\
-#                 ||----w |
-#                 ||     ||
-# This is the main file for constructing and running the Enigma
 # 
-
-
-
 # The Enigma consists of 5 stages. 
 # 1. The Keyboard: This implementation uses a standard 26-character alphabet
 # 2. The Plugboard: Contains up to 13 mappings for characters output from the keyboard
@@ -21,6 +11,7 @@
 # 4. The Reflector : Contains 13 character mappings to ensure the same character is not encoded to itself
 # 5. The Rotors (part II) : Going in reverse order from part I, this time the rotors do not increment, used so
 #        that the Enigma can be used to both encrypt and decrypt a message
+# -----------------------------------------------------------------------------------
 
 from rotor import Rotor
 from reflector import Reflector
@@ -37,7 +28,6 @@ print "---------------------------------------------------"
 print ""
 
 
-
 class Enigma:
 
 	def __init__(self):
@@ -49,44 +39,38 @@ class Enigma:
 		self.theReflector = Reflector()
 		self.thePlugboard = Plugboard()
 
+		# Set the order of the rotors
 		self.firstRotor.setNextRotor(self.secondRotor)
 		self.secondRotor.setNextRotor(self.thirdRotor)
-
 		self.thirdRotor.setPreviousRotor(self.secondRotor)
 		self.secondRotor.setPreviousRotor(self.firstRotor)
 
+		# Set the keys which turnover the next rotor
 		self.firstRotor.changeTurnoverKey("R")
 		self.secondRotor.changeTurnoverKey("F")
 		self.thirdRotor.changeTurnoverKey("W")
 
+		# Set the starting key for the rotor
 		self.firstRotor.changeStartingKey("G")
 		self.secondRotor.changeStartingKey("K")
 		self.thirdRotor.changeStartingKey("O")
 
-
-
 	def readInput(self):
 
 		# Start reading 
-
 		line = sys.stdin.readline()
 
-
 		while(line != "!\n"):
-
-
 			wordToEncrypt = line.rstrip()
 			originalWord = wordToEncrypt		
 			wordToEncrypt = wordToEncrypt.replace(" ","")
 			wordToEncrypt = self.thePlugboard.changeString(wordToEncrypt)
 
 			if wordToEncrypt is not None and wordToEncrypt.isalpha():
-
 				encryptedLength = len(wordToEncrypt)
 				encryptedWord = ""
 
 				for i in range(0,encryptedLength):
-
 					char = wordToEncrypt[i]
 
 					self.firstRotor.increment()
@@ -105,15 +89,18 @@ class Enigma:
 				print ""
 				print originalWord, " encrypted as: ", encryptedWord
 				print ""
-
+				
 				self.firstRotor.reset()
 				self.secondRotor.reset()
 				self.thirdRotor.reset()
 
 			line = sys.stdin.readline()
 
-runEnigma = Enigma()
-runEnigma.readInput()
+
+if __name__ == "__main__":
+
+	runEnigma = Enigma()
+	runEnigma.readInput()
 
 
 
