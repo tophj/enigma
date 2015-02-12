@@ -5,34 +5,6 @@ sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
 from reflector import Reflector
 
-# Reflector settings
-# {'A' : 'Z',
-# 		'B':'Y',
-# 		'C':'X',
-# 		'D':'W',
-# 		'E':'V',
-# 		'F':'U',
-# 		'G':'T',
-# 		'H':'S',
-# 		'I':'R',
-# 		'J':'Q',
-# 		'K':'P',
-# 		'L':'O',
-# 		'M':'N',
-# 		'N':'M',
-# 		'O':'L',
-# 		'P':'K',
-# 		'Q':'J',
-# 		'R':'I',
-# 		'S':'H',
-# 		'T':'G',
-# 		'U':'F',
-# 		'V':'E',
-# 		'W':'D',
-# 		'X':'C',
-# 		'Y':'B',
-# 		'Z':'A',
-# 		}
 
 class testReflector(unittest.TestCase):
 
@@ -43,32 +15,32 @@ class testReflector(unittest.TestCase):
 	def test_getMapping(self):
 
 
-		self.assertEqual(self.reflector.getMapping("A"),"Z")
-		self.assertEqual(self.reflector.getMapping("B"),"Y")
-		self.assertEqual(self.reflector.getMapping("C"),"X")
-		self.assertEqual(self.reflector.getMapping("D"),"W")
-		self.assertEqual(self.reflector.getMapping("E"),"V")
-		self.assertEqual(self.reflector.getMapping("F"),"U")
-		self.assertEqual(self.reflector.getMapping("G"),"T")
-		self.assertEqual(self.reflector.getMapping("H"),"S")
-		self.assertEqual(self.reflector.getMapping("I"),"R")
-		self.assertEqual(self.reflector.getMapping("J"),"Q")
-		self.assertEqual(self.reflector.getMapping("k"),"P")
-		self.assertEqual(self.reflector.getMapping("L"),"O")
-		self.assertEqual(self.reflector.getMapping("M"),"N")
-		self.assertEqual(self.reflector.getMapping("N"),"M")
-		self.assertEqual(self.reflector.getMapping("O"),"L")
-		self.assertEqual(self.reflector.getMapping("P"),"K")
-		self.assertEqual(self.reflector.getMapping("Q"),"J")
-		self.assertEqual(self.reflector.getMapping("R"),"I")
-		self.assertEqual(self.reflector.getMapping("s"),"H")
-		self.assertEqual(self.reflector.getMapping("t"),"G")
-		self.assertEqual(self.reflector.getMapping("U"),"F")
-		self.assertEqual(self.reflector.getMapping("v"),"E")
-		self.assertEqual(self.reflector.getMapping("W"),"D")
-		self.assertEqual(self.reflector.getMapping("X"),"C")
-		self.assertEqual(self.reflector.getMapping("y"),"B")
-		self.assertEqual(self.reflector.getMapping("z"),"A")
+		self.assertEqual(self.reflector.getMapping("A"),"E")
+		self.assertEqual(self.reflector.getMapping("B"),"J")
+		self.assertEqual(self.reflector.getMapping("C"),"M")
+		self.assertEqual(self.reflector.getMapping("D"),"Z")
+		self.assertEqual(self.reflector.getMapping("E"),"A")
+		self.assertEqual(self.reflector.getMapping("F"),"L")
+		self.assertEqual(self.reflector.getMapping("G"),"Y")
+		self.assertEqual(self.reflector.getMapping("H"),"X")
+		self.assertEqual(self.reflector.getMapping("I"),"V")
+		self.assertEqual(self.reflector.getMapping("J"),"B")
+		self.assertEqual(self.reflector.getMapping("k"),"W")
+		self.assertEqual(self.reflector.getMapping("L"),"F")
+		self.assertEqual(self.reflector.getMapping("M"),"C")
+		self.assertEqual(self.reflector.getMapping("N"),"R")
+		self.assertEqual(self.reflector.getMapping("O"),"Q")
+		self.assertEqual(self.reflector.getMapping("P"),"U")
+		self.assertEqual(self.reflector.getMapping("Q"),"O")
+		self.assertEqual(self.reflector.getMapping("R"),"N")
+		self.assertEqual(self.reflector.getMapping("s"),"T")
+		self.assertEqual(self.reflector.getMapping("t"),"S")
+		self.assertEqual(self.reflector.getMapping("U"),"P")
+		self.assertEqual(self.reflector.getMapping("v"),"I")
+		self.assertEqual(self.reflector.getMapping("W"),"K")
+		self.assertEqual(self.reflector.getMapping("X"),"H")
+		self.assertEqual(self.reflector.getMapping("y"),"G")
+		self.assertEqual(self.reflector.getMapping("z"),"D")
 
 
 if __name__ == "__main__":
