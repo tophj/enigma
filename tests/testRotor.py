@@ -24,16 +24,16 @@ class testRotor(unittest.TestCase):
 		testKey4 = "c"
 
 		self.firstRotor.changeStartingKey(testKey1)
-		self.assertEqual("G",self.firstRotor.getStartingKey())
+		self.assertEqual("G",self.firstRotor.getCurrentKey())
 
 		self.firstRotor.changeStartingKey(testKey2)
-		self.assertEqual("Z",self.firstRotor.getStartingKey())
+		self.assertEqual("Z",self.firstRotor.getCurrentKey())
 
 		self.secondRotor.changeStartingKey(testKey3)
-		self.assertEqual("P",self.secondRotor.getStartingKey())
+		self.assertEqual("P",self.secondRotor.getCurrentKey())
 
 		self.firstRotor.changeStartingKey(testKey4)
-		self.assertEqual("C",self.firstRotor.getStartingKey())
+		self.assertEqual("C",self.firstRotor.getCurrentKey())
 
 
 	def testChangeTurnoverKey(self):
@@ -60,13 +60,13 @@ class testRotor(unittest.TestCase):
 		self.firstRotor.changeTurnoverKey("B")
 		self.firstRotor.increment()
 		
-		self.assertEqual("Q",self.firstRotor.getStartingKey())
+		self.assertEqual("Q",self.firstRotor.getCurrentKey())
 
 		self.firstRotor.increment()
 		self.firstRotor.increment()
 		self.firstRotor.increment()
 
-		self.assertEqual("T",self.firstRotor.getStartingKey())
+		self.assertEqual("T",self.firstRotor.getCurrentKey())
 
 
 	def testStaticStartingKey(self):
@@ -106,27 +106,52 @@ class testRotor(unittest.TestCase):
 
 	def testEncrypt(self):
 
+
 		# All three rotors should rotate
-		self.firstRotor.changeStartingKey("Z")
-		self.firstRotor.changeTurnoverKey("A")
+		self.firstRotor.changeStartingKey("O")
+		self.firstRotor.changeTurnoverKey("Q")
 
-		self.secondRotor.changeStartingKey("Z")
-		self.secondRotor.changeTurnoverKey("A")
+		self.secondRotor.changeStartingKey("D")
+		self.secondRotor.changeTurnoverKey("E")
 
-		self.thirdRotor.changeStartingKey("Z")
-		self.thirdRotor.changeTurnoverKey("A")
+		self.thirdRotor.changeStartingKey("A")
+		self.thirdRotor.changeTurnoverKey("C")
 
 		self.firstRotor.setNextRotor(self.secondRotor)
 		self.secondRotor.setNextRotor(self.thirdRotor)
 
 		self.secondRotor.setPreviousRotor(self.firstRotor)
 		self.thirdRotor.setPreviousRotor(self.secondRotor)
+	
+		self.firstRotor.increment()
+		# ADP
+		self.assertEqual("P", self.firstRotor.encrypt("A"))
+		self.assertEqual("D", self.secondRotor.encrypt("A"))
+		self.assertEqual("A", self.thirdRotor.encrypt("A"))
 
 		self.firstRotor.increment()
-
-		self.assertEqual("A", self.firstRotor.encrypt("A"))
-		self.assertEqual("A", self.secondRotor.encrypt("A"))
+		# ADQ
+		self.assertEqual("Q", self.firstRotor.encrypt("A"))
+		self.assertEqual("D", self.secondRotor.encrypt("A"))
 		self.assertEqual("A", self.thirdRotor.encrypt("A"))
+
+		self.firstRotor.increment()
+		# AER
+		self.assertEqual("R", self.firstRotor.encrypt("A"))
+		self.assertEqual("E", self.secondRotor.encrypt("A"))
+		self.assertEqual("A", self.thirdRotor.encrypt("A"))
+
+		self.firstRotor.increment()
+		# BFS
+		self.assertEqual("S", self.firstRotor.encrypt("A"))
+		self.assertEqual("F", self.secondRotor.encrypt("A"))
+		self.assertEqual("B", self.thirdRotor.encrypt("A"))
+
+		self.firstRotor.increment()
+		# BFT
+		self.assertEqual("T", self.firstRotor.encrypt("A"))
+		self.assertEqual("F", self.secondRotor.encrypt("A"))
+		self.assertEqual("B", self.thirdRotor.encrypt("A"))
 
 
 
@@ -152,10 +177,10 @@ class testRotor(unittest.TestCase):
 		self.firstRotor.increment()
 		self.firstRotor.increment()
 
-		self.assertEqual("F",self.firstRotor.getStartingKey())
+		self.assertEqual("F",self.firstRotor.getCurrentKey())
 		self.firstRotor.reset()
 
-		self.assertEqual("A",self.firstRotor.getStartingKey())
+		self.assertEqual("A",self.firstRotor.getCurrentKey())
 
 
 
