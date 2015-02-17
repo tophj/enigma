@@ -21,10 +21,13 @@ import sys
 
 
 print ""
-print "---------------- Welcome to Enigma ----------------"
-print "To start, type a word and it will be encrypted."
+print "------------------ Enigma Encrpyt / Decrpyt ------------------"
+print "To start, type plaintext and it will be encrypted."
+print "Or, type in ciphertext and it will be decrypted."
+print ""
+print "Rotors are reset in between encryptions."
 print "To exit, type '!'"
-print "---------------------------------------------------"
+print "--------------------------------------------------------------"
 print ""
 
 
@@ -33,10 +36,10 @@ class Enigma:
 	def __init__(self):
 
 		# Set up 
-		self.firstRotor = Rotor()
-		self.secondRotor = Rotor()
-		self.thirdRotor = Rotor()
-		self.theReflector = Reflector()
+		self.firstRotor = Rotor(1)
+		self.secondRotor = Rotor(2)
+		self.thirdRotor = Rotor(3)
+		self.theReflector = Reflector('B')
 		self.thePlugboard = Plugboard()
 
 		# Set the order of the rotors
@@ -50,10 +53,6 @@ class Enigma:
 		self.secondRotor.changeTurnoverKey("F")
 		self.thirdRotor.changeTurnoverKey("W")
 
-		# Set the starting key for the rotor
-		self.firstRotor.changeStartingKey("G")
-		self.secondRotor.changeStartingKey("K")
-		self.thirdRotor.changeStartingKey("O")
 
 	def readInput(self):
 
@@ -64,28 +63,43 @@ class Enigma:
 			wordToEncrypt = line.rstrip()
 			originalWord = wordToEncrypt		
 			wordToEncrypt = wordToEncrypt.replace(" ","")
-			wordToEncrypt = self.thePlugboard.changeString(wordToEncrypt)
 
 			if wordToEncrypt is not None and wordToEncrypt.isalpha():
 				encryptedLength = len(wordToEncrypt)
 				encryptedWord = ""
-
+				print "--------------------------------------------------------------"
+				print(" In Plugboard R1  R2  R3  Reflector R3  R2  R1  Plugboard Out ")
 				for i in range(0,encryptedLength):
-					char = wordToEncrypt[i]
+				
 
-					self.firstRotor.increment()
+					char = wordToEncrypt[i].upper()
+					sys.stdout.write(" " + char + "   ")
+					
+					char = self.thePlugboard.changeString(char)
+					sys.stdout.write(char + "         ")
+					
 					firstOutput = self.firstRotor.encrypt(char)
+					sys.stdout.write(firstOutput + "   ")
 					secondOutput = self.secondRotor.encrypt(firstOutput)
+					sys.stdout.write(secondOutput + "   ")
 					thirdOutput = self.thirdRotor.encrypt(secondOutput)
+					sys.stdout.write(thirdOutput + "   ")
 
 					outputReflector = self.theReflector.getMapping(thirdOutput)
+					sys.stdout.write(outputReflector + "         ")
 
 					thirdOutput = self.thirdRotor.postEncrypt(outputReflector)
+					sys.stdout.write(thirdOutput + "   ")
 					secondOutput = self.secondRotor.postEncrypt(thirdOutput)
+					sys.stdout.write(secondOutput + "   ")
 					firstOutput = self.firstRotor.postEncrypt(secondOutput)
+					sys.stdout.write(firstOutput + "   ")
+					plugboardOutput = self.thePlugboard.changeString(firstOutput)
+					sys.stdout.write(plugboardOutput + "         " + plugboardOutput + "  \n")
+					self.firstRotor.increment()
 
-					encryptedWord += firstOutput
-
+					encryptedWord += plugboardOutput
+				print "--------------------------------------------------------------"
 				print ""
 				print originalWord, " encrypted as: ", encryptedWord
 				print ""
@@ -93,6 +107,9 @@ class Enigma:
 				self.firstRotor.reset()
 				self.secondRotor.reset()
 				self.thirdRotor.reset()
+
+			else:
+				print "Error: Word can only contain letters in the alphabet.\n"
 
 			line = sys.stdin.readline()
 

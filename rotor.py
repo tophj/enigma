@@ -55,7 +55,7 @@ class Rotor:
 			self.alphabet = ['V','Z','B','R','G','I','T','Y','U','P','S','D','N','H','L','X','A','W','M','J','Q','O','F','E','C','K']
 		# set it equal to the testing rotor
 		else:
-			self.turnoverKey = "A"
+			self.turnoverKey = "E"
 			self.currentKey = "A"
 			self.staticStartingKey = "A"
 			self.nextRotor = None
@@ -133,8 +133,10 @@ class Rotor:
 	def encrypt(self, char):
 
 		asciiCharInt = ord(char.upper())
-		newAsciiCharIndex = ((asciiCharInt - 65)+ self.currentIndex) % 26
+		newAsciiCharIndex = ((asciiCharInt - 65) + self.currentIndex) % 26
+
 		encryptedChar = self.alphabet[newAsciiCharIndex]
+
 
 		return encryptedChar
 
@@ -148,7 +150,7 @@ class Rotor:
 				break
 			indexOfInputChar += 1
 
-		shiftedIndex = (indexOfInputChar + self.currentIndex) % 26
+		shiftedIndex = (indexOfInputChar - self.currentIndex) % 26
 		asciiValue = shiftedIndex + 65
 		postEncryptChar = chr(asciiValue)
 		
@@ -171,6 +173,7 @@ class Rotor:
 	def reset(self):
 
 		self.changeStartingKey(self.staticStartingKey)
+		self.currentIndex = 0;
 
 
 
