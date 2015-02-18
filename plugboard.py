@@ -10,7 +10,7 @@ class Plugboard:
 	# Initialize default mapping
 	# WZ AB MO TF RX SG QU VI YN EL
 	def __init__(self, test=None):
-
+		#test mapping
 		if(test):
 			self.mapping = {
 			'A':'B', 'B':'A',

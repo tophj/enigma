@@ -69,7 +69,7 @@ class testRotor(unittest.TestCase):
 		self.assertEqual("T",self.firstRotor.getCurrentKey())
 
 
-	def testStaticStartingKey(self):
+	def testStartingKey(self):
 
 		testKey1 = "P"
 
@@ -81,7 +81,7 @@ class testRotor(unittest.TestCase):
 		self.firstRotor.increment()
 		self.firstRotor.increment()
 
-		self.assertEqual("P",self.firstRotor.getStaticStartingKey())
+		self.assertEqual("P",self.firstRotor.getStartingKey())
 
 
 

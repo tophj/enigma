@@ -19,7 +19,6 @@ class Reflector:
 		# A  B  C  D  E  F  G  H  I  J  K  L  M  N  O  P  Q  R  S  T  U  V  W  X  Y  Z
 		# Y  R  U  H  Q  S  L  D  P  X  N  G  O  K  M  I  E  B  F  Z  C  W  V  J  A  T
 
-
 		if(version is 'B'):
 			# Reflector B
 			self.mappingDict = {
