@@ -16,8 +16,8 @@
 from rotor import Rotor
 from reflector import Reflector
 from plugboard import Plugboard
-
 import sys
+import logging
 
 
 print ""
@@ -34,7 +34,6 @@ print ""
 class Enigma:
 
 	def __init__(self):
-
 		# Set up 
 		self.firstRotor = Rotor(1)
 		self.secondRotor = Rotor(2)
@@ -54,7 +53,22 @@ class Enigma:
 		self.thirdRotor.changeTurnoverKey("W")
 
 
-	def readInput(self):
+	def readInput(self, argv):
+		logger = logging.getLogger()
+		logger.setLevel(logging.INFO)
+
+		ch = logging.StreamHandler(sys.stdout)
+		ch.setLevel(logging.DEBUG)
+
+		logger.addHandler(ch)
+		# Read in args, check to see if verbose statements (-v) are on 
+		for arg in argv[1:]:
+			if arg == '-v':
+				logger.setLevel(logging.DEBUG)
+			else:
+				print "Invalid parameter " + arg + ". Correct useage is:\npython enigma.py \nOR\npython enigma.py -v \nfor step by step encryption/decryption results.\n"
+				sys.exit(0)
+
 
 		# Start reading 
 		line = sys.stdin.readline()
@@ -67,36 +81,37 @@ class Enigma:
 			if wordToEncrypt is not None and wordToEncrypt.isalpha():
 				encryptedLength = len(wordToEncrypt)
 				encryptedWord = ""
-				print "--------------------------------------------------------------"
-				print(" In Plugboard R1  R2  R3  Reflector R3  R2  R1  Plugboard Out ")
-				for i in range(0,encryptedLength):
+				logging.debug("--------------------------------------------------------------")
+				logging.debug(" In Plugboard R1  R2  R3  Reflector R3  R2  R1  Plugboard Out")
 				
-
-					char = wordToEncrypt[i].upper()
-					sys.stdout.write(" " + char + "   ")
+				for i in range(0,encryptedLength):
+					debugLine=  ""
+					charUpper = wordToEncrypt[i].upper()
 					
-					char = self.thePlugboard.changeString(char)
-					sys.stdout.write(char + "         ")
-					
-					firstOutput = self.firstRotor.encrypt(char)
-					sys.stdout.write(firstOutput + "   ")
-					secondOutput = self.secondRotor.encrypt(firstOutput)
-					sys.stdout.write(secondOutput + "   ")
+					# go through plugboard, rotors 1-3, reflector, rotors 3-1, plugboard and out
+					char = self.thePlugboard.changeString(charUpper)
+					firstOutput = self.firstRotor.encrypt(char)				
+					secondOutput = self.secondRotor.encrypt(firstOutput)					
 					thirdOutput = self.thirdRotor.encrypt(secondOutput)
-					sys.stdout.write(thirdOutput + "   ")
-
 					outputReflector = self.theReflector.getMapping(thirdOutput)
-					sys.stdout.write(outputReflector + "         ")
-
-					thirdOutput = self.thirdRotor.postEncrypt(outputReflector)
-					sys.stdout.write(thirdOutput + "   ")
-					secondOutput = self.secondRotor.postEncrypt(thirdOutput)
-					sys.stdout.write(secondOutput + "   ")
-					firstOutput = self.firstRotor.postEncrypt(secondOutput)
-					sys.stdout.write(firstOutput + "   ")
-					plugboardOutput = self.thePlugboard.changeString(firstOutput)
-					sys.stdout.write(plugboardOutput + "         " + plugboardOutput + "  \n")
+					thirdOutputRe = self.thirdRotor.postEncrypt(outputReflector)			
+					secondOutputRe = self.secondRotor.postEncrypt(thirdOutputRe)					
+					firstOutputRe = self.firstRotor.postEncrypt(secondOutputRe)				
+					plugboardOutput = self.thePlugboard.changeString(firstOutputRe)					
 					self.firstRotor.increment()
+
+					# debugging output for -v
+					debugLine+=" " + charUpper + "   "
+					debugLine+= char + "         "
+					debugLine+=firstOutput + "   "
+					debugLine+=secondOutput + "   "
+					debugLine+=thirdOutput + "   "
+					debugLine+=outputReflector + "         "
+					debugLine+=thirdOutputRe + "   "
+					debugLine+=secondOutputRe + "   "
+					debugLine+=firstOutputRe + "   "
+					debugLine+=plugboardOutput + "         " + plugboardOutput + " "
+					logging.debug(debugLine)
 
 					encryptedWord += plugboardOutput
 				print "--------------------------------------------------------------"
@@ -117,7 +132,7 @@ class Enigma:
 if __name__ == "__main__":
 
 	runEnigma = Enigma()
-	runEnigma.readInput()
+	runEnigma.readInput(sys.argv)
 
 
 
